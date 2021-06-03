@@ -13,6 +13,9 @@
 #include "HeartBeat.h"
 #include "hw.h"
 #include "LedModule.h"
+#include "Input.h"
+
+HeartBeat heartBeat = HeartBeat(13); // pin
 
 // pixels0 Holds River segments
 // pixels1 Holds (City, Snow-Monitor-Site, Dam )
@@ -20,20 +23,22 @@
 Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
 
-// Even those its called river at the moment it only fades leds in and fades them back out
+// Even though its called river at the moment it only fades leds in and fades them back out
 
 LedModule river1 = LedModule(&pixels1, 2, 10);
 bool riverToggle = true;
 unsigned long riverTimer = 0;
 unsigned long riverTimeStep = 2500;
 
-HeartBeat heartBeat = HeartBeat(13); // Heartbeat on pin 13
 
 ////**** Animation
 int animStep = 0;
 
 unsigned long timer = 0;
 unsigned long timeStep = 30;
+
+// Input global object
+Input input = Input(buttonPins, NUM_BUTTONS);
 
 // function declarations
 void riverAnimate();
@@ -52,20 +57,33 @@ void setup() {
   pixels0.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   clearLeds();
+  input.begin();
 }
 void loop() {
   heartBeat.update();
+  input.update();
   //clearLeds();
+
+  // Inputs 
+  if(input.isDown(0)) {
+    river1.triggerFadeIn1();
+  }
+  if(input.isDown(1)) {
+    river1.triggerFadeOut1();
+  }
+  if(input.isDown(2)) {
+    
+  }
 
   //**************************River Test *************************************
   //Serial.println(millis());
   if( millis() - riverTimer > riverTimeStep) {
     if(riverToggle == true) {
       river1.triggerFadeIn1();
-      Serial.println("triggering fade in");
+      //Serial.println("triggering fade in");
       riverToggle = false;
     } else { 
-      Serial.println("triggering fade out");
+      //Serial.println("triggering fade out");
       river1.triggerFadeOut1();
       riverToggle = true;
     }
@@ -73,8 +91,8 @@ void loop() {
   }
   river1.update();
 
-/*
 
+/*
   // draw River static - blue
   int riverLen = 30;
 

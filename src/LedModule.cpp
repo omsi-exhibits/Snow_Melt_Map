@@ -91,7 +91,7 @@ void LedModule::update() {
 }
 void LedModule::triggerIdle() {
     mState = IDLE;
-    Serial.println("Idle triggered");
+    //Serial.println("Idle triggered");
 }
 void LedModule::triggerFadeOut2() {
     triggerFadeOut1();
@@ -104,8 +104,8 @@ void LedModule::triggerFadeOut1() {
     //Serial.println(mFadeStartColor);
     if(mState == FADEIN) {
         mCurrentFadeOutDuration = (millis() - mFadeInStartTime);
-        Serial.print("Current fade duration: ");
-        Serial.println(mCurrentFadeOutDuration);
+        //Serial.print("Current fade duration: ");
+        //Serial.println(mCurrentFadeOutDuration);
     } else {
         mCurrentFadeOutDuration = mFadeOutDuration;
     }
