@@ -14,22 +14,22 @@ backup data channel will be used. This allows the strip to skip a bad led and co
 ## Microcontroller testing
 - Leds on a 4 Meter ethernet cable using octows2812 level
 
-# SNOW MELT MAP Notes
-The Plan:
-Breakdown map into segments.
-There will need to be several strings
-- River
-- Snow sites
-- Cities
-- Dams
-- Aquaducts
-- Water sources
+# SNOW MELT MAP Button Target Areas
+// Button 0 - Colorado R. & Tributaries
+// --- R14 - R30 
+// Button 1 - Snow Monitoring Sites
+// Button 2 - Dams (7)
+// Button 3 - Grand Junction City, Dam, and rivers to the right of the city leading into it
+// --- R21b (0-12leds) & R22
+// Button 4 - Los Vegas City, Dams, and river segments
+// --- R14 - R30 light up & 4 Dams
+// Button 5 - LA water supply from Colorado R.
+// --- R13 - R33 + 4 dams
+// Button 6 - LA supply from far away 
+// --- All river supply. exclude R34
+// Button 7 - Outside Colorado r. Watershed
+// --- All Water supply areas.
 
-The code loop
-// Get input
-// update strip segments
-// -- logic ~!
-// draw leds
 
 27 main segments
 

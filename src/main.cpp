@@ -23,8 +23,9 @@ HeartBeat heartBeat = HeartBeat(13); // pin
 Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
 
-// Even though its called river at the moment it only fades leds in and fades them back out
 
+
+// Even though its called river at the moment it only fades leds in and fades them back out
 LedModule river1 = LedModule(&pixels1, 2, 10);
 bool riverToggle = true;
 unsigned long riverTimer = 0;
