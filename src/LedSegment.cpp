@@ -1,21 +1,21 @@
 #include "LedSegment.h"
 #include <Arduino.h>
 
-LedSegment::LedSegment(int startIndex, int length, LedSegment *nextSegment) {
+LedSegment::LedSegment() {
+    mStartIndex = 0;
+    mLength = 0;
+    pNextSegment = NULL;
+    mConnectingIndex = 0;
+    mType = RIVER_ASC;
+}
+void LedSegment::config(int startIndex, int length, LedSegment *nextSegment, int connectingIndex, SEGMENT_TYPE type) {
+    mType = type;
     mStartIndex = startIndex;
     mLength = length;
-    mNextSegment = nextSegment;
-    mIndex = 0;
+    pNextSegment = nextSegment;
+    mConnectingIndex = connectingIndex;
 }
 void LedSegment::update() {
-    if(millis() - mTimer >= mTimeStep) {
-        mTimer = millis();
-        if(mIndex >= mLength) {
-            // drop is at the end. start a drop on the next segment
-            // loop drop to the begining index
-            mIndex = 0;
-        }
-    }
 
 }
 

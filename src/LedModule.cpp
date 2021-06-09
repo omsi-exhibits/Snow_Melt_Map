@@ -1,13 +1,23 @@
 #include "LedModule.h"
+#include "LedSegment.h"
 #include <Adafruit_NeoPixel_ZeroDMA.h>
 //#include <Arduino.h>
 
-LedModule::LedModule(Adafruit_NeoPixel_ZeroDMA* strip, int startIndex, int numLeds) {
-    mStartIndex = startIndex;
-    mNumLeds = numLeds;
+// Static member definitions  
+uint32_t LedModule::mFadeColor1 = Adafruit_NeoPixel_ZeroDMA::Color(0,0,255);
+uint32_t LedModule::mFadeColor2 = Adafruit_NeoPixel_ZeroDMA::Color(255,200,200);
+
+LedModule::LedModule(Adafruit_NeoPixel_ZeroDMA* strip, LedSegment* ledSegments, int numLedSegments) {
+    // remove
+    mStartIndex = 0;
+    mNumLeds = 0;
+    //
+    pLedSegments = ledSegments;
+    mNumLedSegments = numLedSegments;
+
     mTimer = 0;
+    mAnimationStep = 0;
     mState = IDLE;
-    mCount = 0;
     pStrip = strip;
 
     mFadeStartColor = Adafruit_NeoPixel_ZeroDMA::Color(0,0,0);
@@ -16,6 +26,47 @@ LedModule::LedModule(Adafruit_NeoPixel_ZeroDMA* strip, int startIndex, int numLe
 }
 void LedModule::begin() {
     // prob not needed
+}
+void LedModule::clearSegments() {
+    for(int j = 0; j < mNumLedSegments; j ++) {
+        int si = pLedSegments[j].mStartIndex;
+        int nl = pLedSegments[j].mLength;
+        // Marque the strip leds. Ascending order
+        for(int i = si; i < si + nl; i++) {
+            pStrip->setPixelColor(i , Adafruit_NeoPixel_ZeroDMA::Color(0,0,0));
+        }
+        
+    }
+}
+void LedModule::drawSegments() {
+
+    for(int j = 0; j < mNumLedSegments; j ++) {
+        int si = pLedSegments[j].mStartIndex;
+        int nl = pLedSegments[j].mLength;
+
+        SEGMENT_TYPE dir = pLedSegments[j].mType;
+        if(dir == RIVER_ASC) {
+            // Marque the strip leds. Ascending order
+            for(int i = si; i < si + nl; i++) {
+                if(i%3 == mAnimationStep) 
+                    pStrip->setPixelColor(i , Adafruit_NeoPixel_ZeroDMA::Color(0,0,255));
+            }
+        } else if(dir == RIVER_DES) { 
+            // Marque in Descending order
+            int aStep = mAnimationStep;
+            if(aStep == 2)
+                aStep = 0;
+            else if(aStep == 0)
+                aStep = 2;
+            for(int i = si + nl - 1; i >= si; i--) {
+                if(i%3 == aStep) 
+                    pStrip->setPixelColor(i , Adafruit_NeoPixel_ZeroDMA::Color(0,0,255));
+            }
+        }
+
+        
+    }
+    
 }
 uint8_t LedModule::lerpSingle(uint8_t startColor, uint8_t endColor, float deltaTime) {
     // lerp a single color channel. For example R for RGB.
@@ -41,11 +92,8 @@ uint32_t LedModule::lerpColor(uint32_t colorStart, uint32_t colorEnd, float delt
     return newColor;
 }
 
-void LedModule::animateSparkle() {
-    
-}
 void LedModule::fillSection(uint32_t color) {
-    for(int i = 0; i < mNumLeds; i ++ ) {
+    for(int i = mStartIndex; i < mStartIndex + mNumLeds; i ++ ) {
         pStrip->setPixelColor(i, color);
     }
 
@@ -54,7 +102,7 @@ void LedModule::update() {
     switch(mState) {
         case FADEIN :
             // calculate a fadeIn Brightness 
-            if(millis() - mFadeInStartTime < mFadeInDuration) {
+            if(millis() - mFadeInStartTime > mFadeInDuration) {
                 //Serial.println(millis()-mFadeInStartTime);
                 float deltaTime = ((float)(millis() - mFadeInStartTime)/(float)mFadeInDuration);
                 //Serial.println(deltaTime);
@@ -71,7 +119,7 @@ void LedModule::update() {
         case IDLE :
             break;
         case FADEOUT :
-            if((millis() - mFadeOutStartTime) < mCurrentFadeOutDuration) {
+            if((millis() - mFadeOutStartTime) > mCurrentFadeOutDuration) {
                 // normalized to 0-1
                 float deltaTime = ((float)(millis() - mFadeOutStartTime)/(float)mCurrentFadeOutDuration);
                 uint32_t currentFade = lerpColor(mFadeStartColor, 0, deltaTime);
@@ -82,6 +130,18 @@ void LedModule::update() {
                 uint32_t currentFade = Adafruit_NeoPixel_ZeroDMA::Color(0,0,0,0);
                 fillSection(currentFade);
                 triggerIdle();
+            }
+            break;
+        case RIVER_ANIMATE :
+            if((millis() - mTimer) > mTimeStep) {
+                //advance animation pattern 
+                mAnimationStep = (mAnimationStep+1) %3;
+                mTimer = millis();
+                Serial.println(mAnimationStep);
+                clearSegments();
+                //fillSection(Adafruit_NeoPixel_ZeroDMA::Color(0,0,0)); // set all to black 
+                drawSegments();
+                
             }
             break;
         default :
@@ -123,6 +183,9 @@ void LedModule::triggerFadeIn1() {
     mTargetColor = mFadeColor1;
     mFadeInStartTime = millis();
     mState = FADEIN;
+}
+void LedModule::triggerRiverAnimate() {
+    mState = RIVER_ANIMATE;
 }
 
 float LedModule::lerp (float x, float x0, float x1, float y0, float y1) {

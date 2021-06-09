@@ -31,27 +31,26 @@ backup data channel will be used. This allows the strip to skip a bad led and co
 // --- All Water supply areas.
 
 
-27 main segments
-
-41 - segments
-6 - water areas
-7 - dams
-
 - divide into segments and record led lengths
 - [x] [ ] [ ] program some logic for things turning on and off
 - program river flow animation
 - design pcb schematic
 
 ## Programing Priorities
-- [ ] Init git and make a master&dev branch
+- [x] Init git and make a master&dev branch
 - [ ] Mini Document how the prototype works now
-- [ ] MVP whole system
+- [x] MVP whole system
 - [ ] Research git branching standards to use
-- [ ] Input system
+- [x] Input system
 - [ ] Toggle Sections
 - [ ] RiverAnimation Simple
 - [ ] Juicy RiverAnimations
 - [ ] Create git project template ~
+## Programing Notes
+LedSegment defines a segment of leds, and their connection point to others.
+LedRegion collects LedSegments and has state. The LedRegion can be interacted with.
+- TurnedOn, TurnedOff, RiverOn, RiverOff.
+- LedModule(Segment) that are for the Dams, etc. Should not store color data in their object.
 
 ## Test results
 - [x] figure out led mounting.

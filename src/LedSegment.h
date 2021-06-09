@@ -1,18 +1,18 @@
 #ifndef LED_SEGMENT
 #define LED_SEGMENT
+enum SEGMENT_TYPE { RIVER_ASC, RIVER_DES, DAM, SNOWSITE, CITY, WATERAREA, TRACTOR };
 class LedSegment {
     public:
-        LedSegment(int startIndex, int length, LedSegment* nextSegment);
+        LedSegment();
+        void config(int startIndex, int length, LedSegment* nextSegment, int connectingIndex, SEGMENT_TYPE type);
         void update();
-
-    private:
+        SEGMENT_TYPE mType;
         int mStartIndex;
         int mLength;
-        LedSegment *mNextSegment;
-        int mIndex;
-        //int mDrops[]; 
-        const int mTimeStep = 500;
-        unsigned long mTimer;
+        LedSegment *pNextSegment;
+        int mConnectingIndex;
+
+    private:
 };
 
 #endif
