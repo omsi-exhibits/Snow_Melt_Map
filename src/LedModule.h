@@ -25,6 +25,8 @@ class LedModule {
         void clearNotRiverSegments();
         void clearToggleableSegments();
 
+        void fillRiverSegments(uint32_t color);
+
         void fillSection(uint32_t color);
         uint32_t lerpColor(uint32_t colorStart, uint32_t colorEnd, float deltaTime);
         uint8_t lerpSingle(uint8_t startColor, uint8_t endColor, float deltaTime);
@@ -46,7 +48,7 @@ class LedModule {
         unsigned long mFadeOutStartTime;
         static const int mFadeInDuration = 2000;
         static const int mFadeOutDuration = 2000;
-        unsigned int mCurrentFadeOutDuration;
+        //unsigned int mCurrentFadeOutDuration;
         uint32_t mFadeStartColor;
         uint32_t mTargetColor;
 

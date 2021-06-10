@@ -6,8 +6,8 @@
 // Available pins for Neopixel DMA: 5,12,MOSI (ItsyBitsy M0)
 #define LEDPIN1 5
 #define LEDPIN2 12
-#define NUMPIXELS0 400
-#define NUMPIXELS1 400
+#define NUMPIXELS0 200
+#define NUMPIXELS1 350
 
 #define NUM_BUTTONS 8
 const int buttonPins[NUM_BUTTONS] = {A2,A3,A4,2,3,4,7,9};//,10,11};
