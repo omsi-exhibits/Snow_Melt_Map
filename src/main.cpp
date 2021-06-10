@@ -24,9 +24,9 @@ Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
 
 // River Segments
-#define CRS_LENGTH 6
+#define CRS_LENGTH 9
 LedSegment caliRiverSegments[CRS_LENGTH];
-LedModule river1 = LedModule(&pixels1, caliRiverSegments, 1);
+LedModule river1 = LedModule(&pixels1, caliRiverSegments, CRS_LENGTH);
 
 #define SS_LENGTH 7
 LedSegment snowSiteSegments[SS_LENGTH];
@@ -34,7 +34,7 @@ LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
 
 bool riverToggle = true;
 unsigned long riverTimer = 0;
-unsigned long riverTimeStep = 1000;
+unsigned long riverTimeStep = 2200;
 
 // Input global object
 Input input = Input(buttonPins, NUM_BUTTONS);
@@ -51,6 +51,9 @@ void configLedSegments() {
   caliRiverSegments[3].config(29, 5, &caliRiverSegments[2], 0, RIVER_ASC);
   caliRiverSegments[4].config(34, 5, &caliRiverSegments[5], 0, RIVER_ASC);
   caliRiverSegments[5].config(34, 5, NULL, 0, RIVER_ASC);
+  caliRiverSegments[6].config(39, 2, NULL, 0, DAM);
+  caliRiverSegments[7].config(41, 2, NULL, 0, CITY);
+  caliRiverSegments[8].config(43, 1, NULL, 0, SNOWSITE);
   // Snow Site Segments
   snowSiteSegments[0].config(0, 4, NULL, 0, SNOWSITE);
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
@@ -79,33 +82,32 @@ void loop() {
 
   // Inputs 
   if(input.isDown(0)) {
-    river1.triggerFadeIn1();
   }
   if(input.isDown(1)) {
-    river1.triggerFadeOut1();
   }
   if(input.isDown(2)) {
     
   }
 
   //**************************River Test *************************************
-  int tStep = 0;
+  unsigned int tStep = 0;
   if(riverToggle == true)
     tStep = riverTimeStep;
   else
-    tStep = riverTimeStep * 10;
+    tStep = riverTimeStep * 4;
 
   if( millis() - riverTimer > tStep) {
     if(riverToggle == true) {
       //river1.triggerFadeIn1();
-      river1.triggerRiverAnimate();
+      //river1.triggerIdleAnimate();
+      river1.triggerFadeIn();
       Serial.println("triggering fade in");
       riverToggle = false;
     } else { 
       Serial.println("triggering fade out");
       // river1.triggerFadeOut1();
       clearLeds();
-      river1.triggerIdle();
+      river1.triggerIdleStatic();
       riverToggle = true;
     }
     riverTimer = millis();
@@ -113,20 +115,7 @@ void loop() {
   river1.update();
 
 
-/*
-  int i = 0;
-  // draw Dams - golden yellow
-    pixels1.setPixelColor(i, pixels0.Color(255,255,0));
 
-  // City - purple
-    pixels1.setPixelColor(i, pixels0.Color(160,0, 255));
-
-  // Snow Sample site
-    pixels1.setPixelColor(i, pixels0.Color(255,255,255));
-  
-  // water receiving - pink
-    pixels1.setPixelColor(i, pixels0.Color(255, 20, 100));
-  */
   
   drawLeds();
 }
