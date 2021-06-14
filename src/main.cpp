@@ -53,7 +53,7 @@ void configLedSegments() {
   caliRiverSegments[5].config(34, 5, NULL, 0, RIVER_ASC);
   caliRiverSegments[6].config(39, 2, NULL, 0, DAM);
   caliRiverSegments[7].config(41, 2, NULL, 0, CITY);
-  caliRiverSegments[8].config(43, 360, NULL, 0, SNOWSITE);
+  caliRiverSegments[8].config(43, 107, NULL, 0, SNOWSITE);
   // Snow Site Segments
   snowSiteSegments[0].config(0, 4, NULL, 0, SNOWSITE);
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
