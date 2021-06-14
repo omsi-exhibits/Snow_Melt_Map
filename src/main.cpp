@@ -10,6 +10,7 @@
 
 
 #include <Adafruit_NeoPixel_ZeroDMA.h>
+#include <FastLED.h>
 #include "HeartBeat.h"
 #include "hw.h"
 #include "LedModule.h"
@@ -20,17 +21,19 @@ HeartBeat heartBeat = HeartBeat(13); // pin
 
 // pixels0 Holds River segments
 // pixels1 Holds (Water Areas, Cities, Tractors, Dams, Snow-Monitor-Site, Map-Key)
-Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
+//Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
+//Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
+
+CRGB leds[600];
 
 // River Segments
 #define CRS_LENGTH 9
 LedSegment caliRiverSegments[CRS_LENGTH];
-LedModule river1 = LedModule(&pixels1, caliRiverSegments, CRS_LENGTH);
+//LedModule river1 = LedModule(&pixels1, caliRiverSegments, CRS_LENGTH);
 
 #define SS_LENGTH 7
 LedSegment snowSiteSegments[SS_LENGTH];
-LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
+//LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
 
 bool riverToggle = true;
 unsigned long riverTimer = 0;
@@ -59,24 +62,35 @@ void configLedSegments() {
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
 }
 void clearLeds() {
-  pixels0.clear();
-  pixels1.clear();
+  //pixels0.clear();
+  //pixels1.clear();
 }
 void drawLeds() {
-    pixels0.show();
-    pixels1.show(); 
+    //pixels0.show();
+    //pixels1.show(); 
 }
 
 /************************* SETUP ***********************/
 void setup() {
-  configLedSegments();
+  FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds, 600);
+  /*configLedSegments();
   pixels0.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   clearLeds();
   input.begin();
+  */
 }
 void loop() {
+  unsigned long timer = millis();
+  static uint8_t hue = 0;
+  FastLED.showColor(CHSV(hue++, 255, 255));
+  delay(1);
+  unsigned long timeSpent = millis() - timer;
+  Serial.print("TimeSpent: ");
+  Serial.println(timeSpent);
+
   heartBeat.update();
+  /*
   input.update();
   //clearLeds();
 
@@ -114,5 +128,6 @@ void loop() {
 
   
   drawLeds();
+  */
 }
 
