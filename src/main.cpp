@@ -24,12 +24,15 @@ HeartBeat heartBeat = HeartBeat(13); // pin
 //Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
 //Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
 
-CRGB leds[600];
+CRGB leds0[NUMPIXELS0]; // UI strip
+CRGB leds1[NUMPIXELS1]; // main strip
+
+ 
 
 // River Segments
 #define CRS_LENGTH 9
 LedSegment caliRiverSegments[CRS_LENGTH];
-//LedModule river1 = LedModule(&pixels1, caliRiverSegments, CRS_LENGTH);
+LedModule river1 = LedModule(leds1, caliRiverSegments, CRS_LENGTH);
 
 #define SS_LENGTH 7
 LedSegment snowSiteSegments[SS_LENGTH];
@@ -62,25 +65,29 @@ void configLedSegments() {
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
 }
 void clearLeds() {
+  fill_solid(leds0, NUMPIXELS0, CRGB::Black);
+  fill_solid(leds1, NUMPIXELS1, CRGB::Black);
   //pixels0.clear();
   //pixels1.clear();
 }
 void drawLeds() {
     //pixels0.show();
     //pixels1.show(); 
+    FastLED.show();
+    delay(25);
 }
 
 /************************* SETUP ***********************/
 void setup() {
-  FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds, 600);
-  /*configLedSegments();
-  pixels0.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-  pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds1, 600);
+  configLedSegments();
+  //pixels0.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  //pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   clearLeds();
   input.begin();
-  */
 }
 void loop() {
+  /*
   unsigned long timer = millis();
   static uint8_t hue = 0;
   FastLED.showColor(CHSV(hue++, 255, 255));
@@ -88,9 +95,9 @@ void loop() {
   unsigned long timeSpent = millis() - timer;
   Serial.print("TimeSpent: ");
   Serial.println(timeSpent);
+  */
 
   heartBeat.update();
-  /*
   input.update();
   //clearLeds();
 
@@ -128,6 +135,5 @@ void loop() {
 
   
   drawLeds();
-  */
 }
 

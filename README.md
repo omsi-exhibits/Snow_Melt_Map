@@ -52,6 +52,21 @@ LedRegion collects LedSegments and has state. The LedRegion can be interacted wi
 - TurnedOn, TurnedOff, RiverOn, RiverOff.
 - LedModule(Segment) that are for the Dams, etc. Should not store color data in their object.
 
+## FastLED notes:
+Colors are always dimmed down by a fraction. The dimming fraction is expressed in 256ths, so if you wanted to dim a color down by 25% of its current brightness, you first have to express that in 256ths. In this case, 25% = 64/256.
+```cpp
+  // Dim a color by 25% (64/256ths)
+  // using "video" scaling, meaning: never fading to full black
+  leds[i].fadeLightBy( 64 );
+```
+The library also provides a function that lets you 'clamp' each of the RGB channels to be within given minimums and maximums. 
+
+Blending colors amountOfP2 is 0 - 255. 128 is 50% 255 is 100 color p2.
+```cpp 
+CRGB 	blend (const CRGB &p1, const CRGB &p2, fract8 amountOfP2)
+```
+
+
 ## Test results
 - [x] figure out led mounting.
 - [x] test long wire length. between controller and sender
