@@ -1,7 +1,6 @@
 #ifndef LEDMODULE_H
 #define LEDMODULE_H
 #include <Arduino.h>
-#include <Adafruit_Neopixel_ZeroDMA.h>
 #include <FastLED.h>
 #include "LedSegment.h"
 
@@ -29,9 +28,6 @@ class LedModule {
         void fillRiverSegments(CRGB color);
 
         void fillSection(CRGB color);
-        uint32_t lerpColor(uint32_t colorStart, uint32_t colorEnd, float deltaTime);
-        uint8_t lerpSingle(uint8_t startColor, uint8_t endColor, float deltaTime);
-        float lerp(float x, float x0, float x1, float y0, float y1);
 
     private:
         //Adafruit_NeoPixel_ZeroDMA* pStrip;

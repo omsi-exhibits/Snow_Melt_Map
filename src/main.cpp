@@ -9,10 +9,11 @@
  */
 
 
-#include <Adafruit_NeoPixel_ZeroDMA.h>
+//#include <Adafruit_NeoPixel_ZeroDMA.h>
 #include <FastLED.h>
 #include "HeartBeat.h"
-#include "hw.h"
+//#include "hw.h"
+#include "hw_teensy.h"
 #include "LedModule.h"
 #include "LedSegment.h"
 #include "Input.h"
@@ -56,10 +57,10 @@ void configLedSegments() {
   caliRiverSegments[2].config(22, 7, &caliRiverSegments[1], 0, RIVER_ASC);
   caliRiverSegments[3].config(29, 5, &caliRiverSegments[2], 0, RIVER_ASC);
   caliRiverSegments[4].config(34, 5, &caliRiverSegments[5], 0, RIVER_ASC);
-  caliRiverSegments[5].config(34, 5, NULL, 0, RIVER_ASC);
-  caliRiverSegments[6].config(39, 2, NULL, 0, DAM);
-  caliRiverSegments[7].config(41, 2, NULL, 0, CITY);
-  caliRiverSegments[8].config(43, 107, NULL, 0, SNOWSITE);
+  caliRiverSegments[5].config(39, 3, NULL, 0, RIVER_ASC);
+  caliRiverSegments[6].config(42, 2, NULL, 0, DAM);
+  caliRiverSegments[7].config(44, 2, NULL, 0, CITY);
+  caliRiverSegments[8].config(46, 104, NULL, 0, SNOWSITE);
   // Snow Site Segments
   snowSiteSegments[0].config(0, 4, NULL, 0, SNOWSITE);
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
@@ -79,7 +80,12 @@ void drawLeds() {
 
 /************************* SETUP ***********************/
 void setup() {
-  FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds1, 600);
+  
+  //FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds1, 600);
+  // for teensy4.0 use this one
+  FastLED.addLeds<1, WS2813, LEDPIN2, GRB>(leds1, NUMPIXELS1);
+  //FastLED.addLeds<NUM_STRIPS, WS2813, LED_PIN, RGB>(leds, NUM_LEDS);
+
   configLedSegments();
   //pixels0.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   //pixels1.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
@@ -109,6 +115,7 @@ void loop() {
   if(input.isDown(2)) {
     
   }
+  
 
   //**************************River Test *************************************
   unsigned int tStep = 0;
@@ -131,9 +138,10 @@ void loop() {
   }
   river1.update();
 
-
+  
 
   
   drawLeds();
+  
 }
 
