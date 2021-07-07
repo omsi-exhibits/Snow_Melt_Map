@@ -87,10 +87,10 @@ Write code to animate led strings.
 Test out the rs485 connector.
 
 ## Hardware Purchased:
-(WS2813 LEDs from raywu)[https://www.aliexpress.com/item/32733155461.html]
+[WS2813 LEDs from raywu](https://www.aliexpress.com/item/32733155461.html)
 Large 5v psu
-(Aliexpress Neopixel store - Ray Wu) [https://www.aliexpress.com/store/701799?spm=a2g0o.detail.1000002.2.75cff4f3j9F8uI]
-(Exact pixels): [https://www.aliexpress.com/item/32733155461.html]
+[Aliexpress Neopixel store - Ray Wu](https://www.aliexpress.com/store/701799?spm=a2g0o.detail.1000002.2.75cff4f3j9F8uI)
+[Exact pixels](https://www.aliexpress.com/item/32733155461.html)
 
 ## Misc Notes
 Neopixels recomended distance from controller is 1 meter. Can be extended to 3 meters based on what people online say
@@ -98,4 +98,4 @@ nullpixels can be used every 3 meters to refresh the signal.
 RS485 seems to be the solution for long runs. 
 ************************************************************************************************************************
 
-(Wire Ampacity) [https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes]
+[Wire Ampacity](https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes)
