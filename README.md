@@ -7,6 +7,14 @@ with a plan to switch to a Teensy 4.0 if more pins or processing power is needed
 WS2813B  WS2812 code compatible. These leds have 2 data channels incase one led breaks the
 backup data channel will be used. This allows the strip to skip a bad led and continue.
 
+## Power Calculations
+550 leds 48ma each LED when light at max. The led strings come in 50 led segments. We need power injection every 50 leds at least.
+So that is 11 + 1 the end of the strip. 50 Leds at 48mA is 2.4A.
+
+- New idea to use 2pin 18awg jst connectors for power injections
+I can connect an inline capacitor to them aswell.
+
+
 ## Prototype Testing
 - [x] Led Fit anc securement into acrylic
 - [x] Bigger areas that get lit up

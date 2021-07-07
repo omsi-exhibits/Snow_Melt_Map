@@ -60,7 +60,8 @@ void configLedSegments() {
   caliRiverSegments[5].config(39, 3, NULL, 0, RIVER_ASC);
   caliRiverSegments[6].config(42, 2, NULL, 0, DAM);
   caliRiverSegments[7].config(44, 2, NULL, 0, CITY);
-  caliRiverSegments[8].config(46, 104, NULL, 0, SNOWSITE);
+  //caliRiverSegments[8].config(46, 104, NULL, 0, SNOWSITE); // for 150 leds
+  caliRiverSegments[8].config(46, 104+150, NULL, 0, SNOWSITE);
   // Snow Site Segments
   snowSiteSegments[0].config(0, 4, NULL, 0, SNOWSITE);
   snowSiteSegments[1].config(4, 5, NULL, 0, SNOWSITE);
@@ -80,6 +81,8 @@ void drawLeds() {
 
 /************************* SETUP ***********************/
 void setup() {
+  //heartbeat led
+  pinMode(13,OUTPUT);
   
   //FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds1, 600);
   // for teensy4.0 use this one

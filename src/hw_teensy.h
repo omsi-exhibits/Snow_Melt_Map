@@ -10,7 +10,7 @@
 // LED STRIP # 1- 8
 // 2,14, 7, 8, 6, 20, 21
 #define NUMPIXELS0 50
-#define NUMPIXELS1 150
+#define NUMPIXELS1 300
 
 //Configured for teensy 4.0
 #define NUM_BUTTONS 8
