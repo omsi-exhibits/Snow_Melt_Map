@@ -76,3 +76,29 @@ RS485 seems to be the solution for long runs.
 ************************************************************************************************************************
 
 (Wire Ampacity) [https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes]
+
+
+## LED quality testing
+I have determined that the last batch of hardware had some defects that likely were contributing to the intermittent problems
+with leds flickering and possible temperature based issues.
+We ordered more led strands to try to solve the issue. This time we got about 2x the leds we will need incase we run into the
+same issues and need to pick the best leds from the pack.
+
+### Testing quality
+There should be a few tests to do on the newly arrived leds. For this we will need to re-setup the test rig. That will connect
+Several of the strands together in series. 
+
+- [ ] visual inspection. mark leds that pass. Jot down issues with ones that don't.
+- [ ] connecting and running a test pattern
+- [ ] Test connectors compatible with the final build 
+- [ ] Test all the leds in a 400 led setup (at least 350)
+
+We need 2 end connectors, and 7 in between connectors with power injection 
+
+### Questions
+Can a poorly soldered LED string damage the other strips?
+
+Testing connector has a Data In connector, DataOut, and Power Injection connector. As well as a 1000mF capacitor.
+
+Do we need to shorten the connectors to take up as little space as possible or make them as long as possible for the possibility of interconnecting to a segment farther away? 
+
