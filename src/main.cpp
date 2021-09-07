@@ -25,20 +25,26 @@ HeartBeat heartBeat = HeartBeat(13); // pin
 //Adafruit_NeoPixel_ZeroDMA pixels0(NUMPIXELS0, LEDPIN1, NEO_GRB + NEO_KHZ800);
 //Adafruit_NeoPixel_ZeroDMA pixels1(NUMPIXELS1, LEDPIN2, NEO_GRB + NEO_KHZ800);
 
-CRGB leds0[NUMPIXELS0]; // UI strip
-CRGB leds1[NUMPIXELS1]; // main strip, that has all the rivers and activities
+//CRGB leds0[NUMPIXELS0]; // UI strip
+//CRGB leds1[NUMPIXELS1]; // main strip, that has all the rivers and activities
+CRGB leds0[NUM_PIXELS_PER_STRIP]; // UI strip
+CRGB leds1[NUM_PIXELS_PER_STRIP]; // main strip, that has all the rivers and activities
 
- 
+// combines the leds0 and leds1 arrays together
+// so that fast led can do multiple strips out on a teensy 
+CRGB ledsAll[NUM_PIXELS_PER_STRIP * NUM_STRIPS]; 
+
+// Snow sites
+#define SS_LENGTH 6
+LedSegment snowSiteSegments[SS_LENGTH];
+LedModule snowSites = LedModule(leds1, snowSiteSegments, SS_LENGTH);
+//LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
 
 // River Segments
 #define CRS_LENGTH 9
 LedSegment caliRiverSegments[CRS_LENGTH];
-LedModule river1 = LedModule(leds1, caliRiverSegments, CRS_LENGTH);
+LedModule river1 = LedModule(leds0, caliRiverSegments, CRS_LENGTH);
 
-#define SS_LENGTH 6
-LedSegment snowSiteSegments[SS_LENGTH];
-LedModule snowSites = LedModule(leds0, snowSiteSegments, SS_LENGTH);
-//LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
 
 bool riverToggle = true;
 unsigned long riverTimer = 0;
@@ -78,10 +84,16 @@ void clearLeds() {
   //pixels1.clear();
 }
 void drawLeds() {
-    //pixels0.show();
-    //pixels1.show(); 
-    FastLED.show();
-    delay(25);
+  //pixels0.show();
+  //pixels1.show(); 
+  for(int i = 0 ; i < NUM_PIXELS_PER_STRIP; i ++) {
+    ledsAll[i] = leds0[i];
+  }
+  for(int i = 0 ; i < NUM_PIXELS_PER_STRIP; i ++) {
+    ledsAll[NUM_PIXELS_PER_STRIP + i] = leds1[i];
+  }
+  FastLED.show();
+  delay(25);
 }
 
 /************************* SETUP ***********************/
@@ -91,8 +103,13 @@ void setup() {
   
   //FastLED.addLeds<NEOPIXEL, LEDPIN2>(leds1, 600);
   // for teensy4.0 use this one
-  FastLED.addLeds<2, WS2813, LEDPIN0, GRB>(leds0, NUMPIXELS0);
-  FastLED.addLeds<2, WS2813, LEDPIN1, GRB>(leds1, NUMPIXELS1);
+
+  // only one works
+  //FastLED.addLeds<2, WS2813, LEDPIN0, GRB>(leds0, NUMPIXELS0);
+  //FastLED.addLeds<2, WS2813, LEDPIN1, GRB>(leds1, NUMPIXELS1);
+
+  // my hack to combine CRGB arrays
+  FastLED.addLeds<NUM_STRIPS, WS2812, LEDPIN_PARALLEL, GRB>(ledsAll, NUM_PIXELS_PER_STRIP);
   //FastLED.addLeds<NUM_STRIPS, WS2813, LED_PIN, RGB>(leds, NUM_LEDS);
 
   configLedSegments();
@@ -131,7 +148,7 @@ void loop() {
   if(riverToggle == true)
     tStep = riverTimeStep;
   else
-    tStep = riverTimeStep * 8;
+    tStep = riverTimeStep * 2;
 
   if( millis() - riverTimer > tStep) {
     if(riverToggle == true) {
