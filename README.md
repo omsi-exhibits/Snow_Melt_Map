@@ -98,7 +98,6 @@ nullpixels can be used every 3 meters to refresh the signal.
 RS485 seems to be the solution for long runs. 
 ************************************************************************************************************************
 
-<<<<<<< HEAD
 (Wire Ampacity) [https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes]
 
 
@@ -126,6 +125,4 @@ Testing connector has a Data In connector, DataOut, and Power Injection connecto
 
 Do we need to shorten the connectors to take up as little space as possible or make them as long as possible for the possibility of interconnecting to a segment farther away? 
 
-=======
 [Wire Ampacity](https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes)
->>>>>>> Teensy_Burnin
