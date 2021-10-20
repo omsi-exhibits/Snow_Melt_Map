@@ -18,10 +18,12 @@
   */
 // Static member definitions  
 CRGB LedModule::mDamColor = CRGB(255,255,0);
-CRGB LedModule::mCityColor = CRGB(160,0,200);
+CRGB LedModule::mCityColor = CRGB(255,60,0);
+//CRGB LedModule::mCityColor = CRGB(160,0,200); // old color
 CRGB LedModule::mSnowSiteColor = CRGB(255,255,255);
 CRGB LedModule::mWaterAreaColor = CRGB(255,20,100);
-CRGB LedModule::mTractorColor = CRGB(255,200,200);
+//CRGB LedModule::mTractorColor = CRGB(255,200,200); // old color
+CRGB LedModule::mTractorColor = CRGB(32,255,0);
 CRGB LedModule::mHalfRiverColor = CRGB(0,0,127);
 CRGB LedModule::mBrightRiverColor = CRGB(40,40,255);
 
