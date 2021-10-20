@@ -24,12 +24,12 @@ Note that any pin above 21 is a pad on the back of the board. This is the orderi
 // 2, 14, 7, 8, 6, 20, 21
 
 // Teensy Multi out attempt
-#define NUM_PIXELS_PER_STRIP 350
+#define NUM_PIXELS_PER_STRIP 450
 #define NUM_STRIPS 2
 
 // Note used
-#define NUMPIXELS0 200
-#define NUMPIXELS1 350
+#define NUMPIXELS0 300
+#define NUMPIXELS1 450
 
 //Configured for teensy 4.0
 #define NUM_BUTTONS 7
