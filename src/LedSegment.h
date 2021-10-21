@@ -11,6 +11,7 @@ class LedSegment {
         int mLength;
         LedSegment *pNextSegment;
         int mConnectingIndex;
+        int animationIndex;
 
     private:
 };

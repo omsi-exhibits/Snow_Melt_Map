@@ -19,11 +19,13 @@ class LedModule {
         void drawSegments(); // un needed?
         void drawFadeSegments();
         void drawAnimatedSegments();
+        void drawAnimatedSegments2();
 
         void clearAllSegments();
         void clearRiverSegments();
         void clearNotRiverSegments();
         void clearToggleableSegments();
+        void fadeRiverSegments();
 
         void fillRiverSegments(CRGB color);
 
@@ -39,7 +41,8 @@ class LedModule {
         LEDSTATE mRiverState;
 
         unsigned long mTimer; // Used in river and needs name update
-        static const unsigned int mTimeStep = 333;
+        static const unsigned int mTimeStep = 66;
+        //static const unsigned int mTimeStep = 333;
         int mAnimationStep;
         // Fade Related
         unsigned long mFadeInStartTime;

@@ -100,6 +100,18 @@ void LedModule::clearRiverSegments() {
         
     }
 }
+void LedModule::fadeRiverSegments() {
+    // Fade all the leds a 32/256th brightness
+    
+    for(int j = 0; j < mNumLedSegments; j ++) {
+        int si = pLedSegments[j].mStartIndex;
+        int nl = pLedSegments[j].mLength;
+        SEGMENT_TYPE type = pLedSegments[j].mType;
+        //enum SEGMENT_TYPE { RIVER_ASC, RIVER_DES, DAM, SNOWSITE, CITY, WATERAREA, TRACTOR };
+        if(type == RIVER_ASC || type == RIVER_DES )
+            fadeToBlackBy(pLeds + si, nl, 64);
+    }
+}
 void LedModule::drawFadeSegments() {
     //Draw FadeIn / FadeOutSegments
     
@@ -199,9 +211,38 @@ void LedModule::drawAnimatedSegments() {
             for(int i = si; i < si + nl; i++) {
                 if(i%3 == mAnimationStep)  {
                     pLeds[i] = CRGB::Blue;
-                    Serial.println("drawing");
                 }
             }
+        } else if(dir == RIVER_DES) { 
+            // Marque in Descending order
+            int aStep = mAnimationStep;
+            if(aStep == 2)
+                aStep = 0;
+            else if(aStep == 0)
+                aStep = 2;
+            for(int i = si + nl - 1; i >= si; i--) {
+                if(i%3 == aStep) 
+                    pLeds[i] = CRGB::Blue;
+            }
+        }
+
+        
+    } // end for loop segments
+}
+
+void LedModule::drawAnimatedSegments2() {
+    // reset river segment animIndexs
+
+    for(int j = 0; j < mNumLedSegments; j ++) {
+        int si = pLedSegments[j].mStartIndex;
+        int nl = pLedSegments[j].mLength;
+        int ai = pLedSegments[j].animationIndex;
+
+        SEGMENT_TYPE dir = pLedSegments[j].mType;
+        if(dir == RIVER_ASC) {
+            pLeds[si + ai] = CRGB::Blue;
+            ai = (ai+1) % nl;
+            pLedSegments[j].animationIndex = ai;
         } else if(dir == RIVER_DES) { 
             // Marque in Descending order
             int aStep = mAnimationStep;
@@ -234,10 +275,11 @@ void LedModule::update() {
                 //advance animation pattern 
                 mAnimationStep = (mAnimationStep+1) %3;
                 mTimer = millis();
-                Serial.println(mAnimationStep);
-                clearRiverSegments();
+                //Serial.println(mAnimationStep);
+                fadeRiverSegments();
+                //clearRiverSegments();
                 /////////////fillRiverSegments(mHalfRiverColor);
-                drawAnimatedSegments();
+                drawAnimatedSegments2();
             }
             break;
         case FADEOUT :

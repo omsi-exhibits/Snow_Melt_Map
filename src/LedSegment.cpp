@@ -7,6 +7,7 @@ LedSegment::LedSegment() {
     pNextSegment = NULL;
     mConnectingIndex = 0;
     mType = RIVER_ASC;
+    animationIndex = 0;
 }
 void LedSegment::config(int startIndex, int length, LedSegment *nextSegment, int connectingIndex, SEGMENT_TYPE type) {
     mType = type;

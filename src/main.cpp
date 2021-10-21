@@ -26,7 +26,7 @@ LedModule snowSites = LedModule(leds1, snowSiteSegments, SS_LENGTH);
 //LedModule snowSites = LedModule(&pixels1, snowSiteSegments, 2);
 
 // River Segments
-#define CRS_LENGTH 1
+#define CRS_LENGTH 34
 LedSegment caliRiverSegments[CRS_LENGTH];
 LedModule river1 = LedModule(leds0, caliRiverSegments, CRS_LENGTH);
 
@@ -43,22 +43,60 @@ Input input = Input(buttonPins, NUM_BUTTONS);
 // configures all the river segments. Reference the spreadsheet for indexes and segment lengths
 void configLedSegments() {
   // config(start_index, length, connects_to_segment (NULL if empty), connects_at_index (0 if not needed), segment_type )
+
   // River Segments
-  caliRiverSegments[0].config(0, 348,  NULL, 0, RIVER_ASC);
-  /*
+  // caliRiverSegments[0].config(0, 348,  NULL, 0, RIVER_ASC); // for testing all river segments
   caliRiverSegments[0].config(0, 8,  &caliRiverSegments[1], 3, RIVER_ASC);
   caliRiverSegments[1].config(8, 14, &caliRiverSegments[5], 0, RIVER_ASC);
   caliRiverSegments[2].config(22, 7, &caliRiverSegments[1], 12, RIVER_ASC);
   caliRiverSegments[3].config(29, 5, &caliRiverSegments[2], 3, RIVER_ASC);
   caliRiverSegments[4].config(34, 5, &caliRiverSegments[5], 0, RIVER_ASC);
   caliRiverSegments[5].config(39, 3, NULL, 0, RIVER_ASC);
-  caliRiverSegments[6].config(42, 2, NULL, 0, DAM);
-  caliRiverSegments[7].config(44, 2, NULL, 0, CITY);
-  caliRiverSegments[8].config(46, 104+200, NULL, 0, RIVER_ASC);
-  */
-  // Snow Site Segments
-  //snowSiteSegments[0].config(0, 189, NULL, 0, CITY); // All none-river leds
+  caliRiverSegments[6].config(42, 7, &caliRiverSegments[5], 0, RIVER_ASC);
+
+  // section 2
+  caliRiverSegments[7].config(49, 10,  &caliRiverSegments[5], 1, RIVER_ASC); // for testing all river segments
+  caliRiverSegments[8].config(59, 10,  &caliRiverSegments[7], 6, RIVER_ASC); // for testing all river segments
+  caliRiverSegments[9].config(69, 7,  &caliRiverSegments[8], 5, RIVER_ASC); // for testing all river segments
+  caliRiverSegments[10].config(76, 20, NULL, 0, RIVER_ASC); // for testing all river segments
+
+  // section 3 R14 - R18
+  caliRiverSegments[11].config(96, 20,  &caliRiverSegments[15]/*r18*/, 5, RIVER_ASC);
+  caliRiverSegments[12].config(116, 7,  &caliRiverSegments[11]/*r14*/, 17, RIVER_ASC); 
+  caliRiverSegments[13].config(123, 6,  &caliRiverSegments[12]/*r15*/, 5, RIVER_ASC);
+  caliRiverSegments[14].config(129, 8,  &caliRiverSegments[15]/*r18*/, 5, RIVER_ASC);
+  caliRiverSegments[15].config(137, 10,  &caliRiverSegments[16]/*r19*/, 5, RIVER_ASC);
+
+  // section 4 R19 - R21
+  caliRiverSegments[16].config(147, 9,  &caliRiverSegments[18]/*r21*/, 19, RIVER_ASC);
+  caliRiverSegments[17].config(156, 7,  &caliRiverSegments[18]/*r21*/, 21, RIVER_ASC);
+  caliRiverSegments[18].config(163, 33,  &caliRiverSegments[25]/*r28*/, 0, RIVER_ASC);
+
+  // section 5 R22 - R25
+  caliRiverSegments[19].config(196, 10,  &caliRiverSegments[18]/*r21*/, 12, RIVER_ASC);
+  caliRiverSegments[20].config(206, 9,  &caliRiverSegments[18]/*r21*/, 16, RIVER_ASC);
+  caliRiverSegments[21].config(215, 3,  &caliRiverSegments[22]/*r25*/, 6, RIVER_ASC);
+  caliRiverSegments[22].config(218, 18,  &caliRiverSegments[18]/*r21*/, 26, RIVER_ASC);
   
+  // section 6 R26 - R30
+  caliRiverSegments[23].config(236, 17,  &caliRiverSegments[18]/*r21*/, 32, RIVER_ASC);
+  caliRiverSegments[24].config(253, 5,  &caliRiverSegments[23]/*r26*/, 8, RIVER_ASC);
+  caliRiverSegments[25].config(258, 12,  &caliRiverSegments[27]/*r31*/, 0, RIVER_ASC);
+  caliRiverSegments[26].config(270, 7,  &caliRiverSegments[25]/*r28*/, 11, RIVER_ASC);
+  caliRiverSegments[27].config(277, 2,  &caliRiverSegments[26]/*r29*/, 5, RIVER_ASC);
+
+  // section 7 R31 - R35(old R13)
+  caliRiverSegments[28].config(279, 9,  &caliRiverSegments[31]/*r34*/, 0, RIVER_ASC);
+  caliRiverSegments[29].config(288, 5,  &caliRiverSegments[30]/*r33*/, 2, RIVER_ASC);
+  caliRiverSegments[30].config(293, 5,  &caliRiverSegments[31]/*r34*/, 0, RIVER_ASC);
+  caliRiverSegments[31].config(298, 13,  NULL, 0, RIVER_ASC);
+  caliRiverSegments[32].config(311, 12,  NULL, 0, RIVER_ASC);
+
+  // section 8 R36
+  caliRiverSegments[33].config(323, 24,  NULL, 0, RIVER_ASC); // end
+
+  // Snow Site Segments
+  //snowSiteSegments[0].config(0, 189, NULL, 0, SNOWSITE); // For testing All none-river leds
   
   // Section 1
   snowSiteSegments[0].config(0, 2, NULL, 0, CITY);
@@ -109,12 +147,8 @@ void configLedSegments() {
 void clearLeds() {
   fill_solid(leds0, NUMPIXELS0, CRGB::Black);
   fill_solid(leds1, NUMPIXELS1, CRGB::Black);
-  //pixels0.clear();
-  //pixels1.clear();
 }
 void drawLeds() {
-  //pixels0.show();
-  //pixels1.show(); 
   for(int i = 0 ; i < NUM_PIXELS_PER_STRIP; i ++) {
     ledsAll[i] = leds0[i];
   }
@@ -177,7 +211,7 @@ void loop() {
   if(riverToggle == true)
     tStep = riverTimeStep * 2;
   else
-    tStep = riverTimeStep * 3;
+    tStep = riverTimeStep * 5;
 
   if( millis() - riverTimer > tStep) {
     if(riverToggle == true) {
