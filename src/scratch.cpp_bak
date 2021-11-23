@@ -1,0 +1,53 @@
+
+  riverToVegasSeg[14].config(129, 8,  &riverToVegasSeg[15]/*r18*/, 5, RIVER_ASC);
+  riverToVegasSeg[15].config(137, 10,  &riverToVegasSeg[16]/*r19*/, 5, RIVER_ASC);
+
+  // section 4 R19 - R21
+  riverToVegasSeg[16].config(147, 9,  &riverToVegasSeg[18]/*r21*/, 19, RIVER_ASC);
+  riverToVegasSeg[17].config(156, 7,  &riverToVegasSeg[18]/*r21*/, 21, RIVER_ASC);
+  riverToVegasSeg[18].config(163, 33,  &riverToVegasSeg[25]/*r28*/, 0, RIVER_ASC);
+
+  // section 5 R22 - R25
+  riverToVegasSeg[19].config(196, 10,  &riverToVegasSeg[18]/*r21*/, 12, RIVER_ASC);
+  riverToVegasSeg[20].config(206, 9,  &riverToVegasSeg[18]/*r21*/, 16, RIVER_ASC);
+  riverToVegasSeg[21].config(215, 3,  &riverToVegasSeg[22]/*r25*/, 6, RIVER_ASC);
+  riverToVegasSeg[22].config(218, 18,  &riverToVegasSeg[18]/*r21*/, 26, RIVER_ASC);
+  
+  // section 6 R26 - R30
+  riverToVegasSeg[23].config(236, 17,  &riverToVegasSeg[18]/*r21*/, 32, RIVER_ASC);
+  riverToVegasSeg[24].config(253, 5,  &riverToVegasSeg[23]/*r26*/, 8, RIVER_ASC);
+  riverToVegasSeg[25].config(258, 12,  &riverToVegasSeg[27]/*r31*/, 0, RIVER_ASC);
+  riverToVegasSeg[26].config(270, 7,  &riverToVegasSeg[25]/*r28*/, 11, RIVER_ASC);
+  riverToVegasSeg[27].config(277, 2,  &riverToVegasSeg[26]/*r29*/, 5, RIVER_ASC);
+
+  // section 7 R31 - R35(old R13)
+  riverToVegasSeg[28].config(279, 9,  NULL, 0, RIVER_ASC);
+  riverToVegasSeg[29].config(288, 5,  &riverToVegasSeg[30]/*r33*/, 2, RIVER_ASC);
+  riverToVegasSeg[30].config(293, 5,  NULL, 0, RIVER_ASC);
+
+
+
+  // section 3 R14 - R18
+  riverToVegasSeg[0].config(96, 20,  &riverToVegasSeg[4]/*r18*/, 5, RIVER_ASC);
+  riverToVegasSeg[1].config(116, 7,  &riverToVegasSeg[0]/*r14*/, 17, RIVER_ASC); 
+  riverToVegasSeg[2].config(123, 6,  &riverToVegasSeg[1]/*r15*/, 5, RIVER_ASC);
+  riverToVegasSeg[3].config(129, 8,  &riverToVegasSeg[4]/*r18*/, 5, RIVER_ASC);
+  riverToVegasSeg[4].config(137, 10,  &riverToVegasSeg[5]/*r19*/, 5, RIVER_ASC);
+
+  // section 4 R19 - R21
+  riverToVegasSeg[5].config(147, 9,  &riverToVegasSeg[7]/*r21*/, 19, RIVER_ASC);
+  riverToVegasSeg[6].config(156, 7,  &riverToVegasSeg[7]/*r21*/, 21, RIVER_ASC);
+  riverToVegasSeg[7].config(163, 33,  &riverToVegasSeg[14]/*r28*/, 0, RIVER_ASC);
+
+  // section 5 R22 - R25
+  riverToVegasSeg[8].config(196, 10,  &riverToVegasSeg[7]/*r21*/, 12, RIVER_ASC);
+  riverToVegasSeg[9].config(206, 9,  &riverToVegasSeg[7]/*r21*/, 16, RIVER_ASC);
+  riverToVegasSeg[10].config(215, 3,  &riverToVegasSeg[11]/*r25*/, 6, RIVER_ASC);
+  riverToVegasSeg[11].config(218, 18,  &riverToVegasSeg[7]/*r21*/, 26, RIVER_ASC);
+  
+  // section 6 R26 - R30
+  riverToVegasSeg[12].config(236, 17,  &riverToVegasSeg[7]/*r21*/, 32, RIVER_ASC);
+  riverToVegasSeg[13].config(253, 5,  &riverToVegasSeg[12]/*r26*/, 8, RIVER_ASC);
+  riverToVegasSeg[14].config(258, 12,  &riverToVegasSeg[16]/*r31*/, 0, RIVER_ASC);
+  riverToVegasSeg[15].config(270, 7,  &riverToVegasSeg[14]/*r28*/, 11, RIVER_ASC);
+  riverToVegasSeg[16].config(277, 2,  &riverToVegasSeg[15]/*r29*/, 5, RIVER_ASC);

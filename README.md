@@ -23,21 +23,28 @@ I can connect an inline capacitor to them aswell.
 - Leds on a 4 Meter ethernet cable using octows2812 level
 
 # SNOW MELT MAP Button Target Areas
-// Button 0 - Colorado R. & Tributaries
-// --- R14 - R30 
-// Button 1 - Snow Monitoring Sites
-// Button 2 - Dams (7)
-// Button 3 - Grand Junction City, Dam, and rivers to the right of the city leading into it
-// --- R21b (0-12leds) & R22
-// Button 4 - Los Vegas City, Dams, and river segments
-// --- R14 - R30 light up & 4 Dams
-// Button 5 - LA water supply from Colorado R.
-// --- R13 - R33 + 4 dams
-// Button 6 - LA supply from far away 
+// Button 1 - Colorado R. & Tributaries
+// --- R14 - R34
+// Button 2 - Snow Monitoring Sites
+// Button 3 - Dams (7)
+// Button 4 - Los Vegas City, Dams, and river segments feeding Los Vegas. 
+// --- R14 - R30 light up & 4 Dams (Lighting up Damns seems wrong, but maybe okay)
+// Button 5 - Farms
+
+// Button 6 - Grand Junction City, Dam, and rivers to the right of the city leading into it
+// --- R21b (sub segment) (0-12leds) & R22, Dam
+// Button 7 - Greater Los Angeles water supply
+// --- Aqueducts too
 // --- All river supply. exclude R34
-// Button 7 - Outside Colorado r. Watershed
+// Button 8 -  (Long-distance water users) Outside Colorado r. Watershed
 // --- All Water supply areas.
 
+Once a button is pressed  - Only 1 button may be active at a time.
+UI - dim all the currently lit segments and lights then activate what was pressed
+Good opportunity for a fade in and fade out sound.
+
+If the on button is pressed it turns the feature off.
+If left on after a set time it can return to attractor mode. 
 
 - divide into segments and record led lengths
 - [x] [ ] [ ] program some logic for things turning on and off

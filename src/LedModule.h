@@ -4,22 +4,27 @@
 #include <FastLED.h>
 #include "LedSegment.h"
 
-enum LEDSTATE { IDLE_STATIC, FADEIN, FADEOUT, IDLE_ANIMATE };
+enum LEDSTATE { IDLE_STATIC, FADEIN, FADEOUT, IDLE_ANIMATE, IDLE_ANIMATE_ATTRACTOR };
 
 class LedModule {
     public:
+        LedModule();
         LedModule(CRGB leds[], LedSegment ledSegments[], int numLeds);
+        void config(CRGB leds[], LedSegment ledSegments[], int numLeds);
         void begin(); // not used
         void update();
         void triggerIdleStatic();
         void triggerIdleAnimate(); // animates river
+        void triggerFadeInAttractor();
         void triggerFadeIn();
         void triggerFadeOut();
+        void triggerAttractorAnimate();
 
         void drawSegments(); // un needed?
         void drawFadeSegments();
         void drawAnimatedSegments();
-        void drawAnimatedSegments2();
+        void drawAnimatedSegments2(); // Animate riversegments
+        void drawAnimatedAttractor();
 
         void clearAllSegments();
         void clearRiverSegments();
@@ -32,24 +37,28 @@ class LedModule {
         void fillSection(CRGB color);
 
     private:
-        //Adafruit_NeoPixel_ZeroDMA* pStrip;
         CRGB* pLeds;
         LedSegment* pLedSegments;
         int mNumLedSegments;
-        LEDSTATE mState;
+        //LEDSTATE mState;
+        //LEDSTATE mRiverState;
         LEDSTATE mToggleState;
-        LEDSTATE mRiverState;
+        bool mAttractorActive;
+        bool mAttractorFadeDirection;
 
-        unsigned long mTimer; // Used in river and needs name update
+        unsigned long mTimer; // Used in river 
         static const unsigned int mTimeStep = 66;
-        //static const unsigned int mTimeStep = 333;
         int mAnimationStep;
         // Fade Related
         unsigned long mFadeInStartTime;
         unsigned long mFadeOutStartTime;
-        static const int mFadeInDuration = 2000;
-        static const int mFadeOutDuration = 2000;
-        //unsigned int mCurrentFadeOutDuration;
+        static const int mFadeInDuration = 2200;
+        static const int mFadeOutDuration = 1800;
+        // Attractor Related
+        unsigned long mAttractorFadeTimer;
+        static const int mAttractorFadeDuration = 4000;
+        int mAttractorFadeDir; 
+
         CRGB mFadeStartColor;
         CRGB mTargetColor;
 
