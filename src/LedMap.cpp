@@ -12,6 +12,7 @@ LedMap::LedMap() : coloradoMod(leds0, coloradoRiverSeg, CRS), snowSiteMod(leds1,
 } */
 LedMap::LedMap() : attractorMod(leds0, leds1, NUM_PIXELS_PER_STRIP, NUM_PIXELS_PER_STRIP) {
     coloradoMod.config(leds0, coloradoRiverSeg, CRS);
+    coloradoExitMod.config(leds0, coloradoRiverExitSeg, CRES);
     snowSiteMod.config(leds1, snowSiteSeg, SSS);
     damMod.config(leds1, damSeg, DS);
 
@@ -45,6 +46,7 @@ void LedMap::update() {
     damMod.update();
     farmMod.update();
     coloradoMod.update();
+    coloradoExitMod.update();
     riverToVegasMod.update();
     lasVegasMod.update();
     GJCityMod.update();
@@ -89,6 +91,9 @@ void LedMap::configureLedSegments() {
     coloradoRiverSeg[19].config(293, 5,  &coloradoRiverSeg[20]/*r34*/, 0, RIVER_ASC);
     coloradoRiverSeg[20].config(298, 13,  NULL, 0, RIVER_ASC);
  
+    // Just R34
+    coloradoRiverExitSeg[0].config(298, 13,  NULL, 0, RIVER_ASC);
+
     // snow sites
     snowSiteSeg[0].config(51, 13, NULL, 0, SNOWSITE); 
     snowSiteSeg[1].config(94, 7, NULL, 0, SNOWSITE); 
@@ -161,11 +166,41 @@ void LedMap::configureLedSegments() {
     riverToLASeg[10].config(76, 20, NULL, 0, RIVER_ASC); // for testing all river segments
 
     // for section 3 - 6 turn on the coloradoRiverSeg
+    // section 3 R14 - R18
+    riverToLASeg[11].config(96, 20,  &riverToLASeg[15]/*r18*/, 5, RIVER_ASC);
+    riverToLASeg[12].config(116, 7,  &riverToLASeg[11]/*r14*/, 17, RIVER_ASC); 
+    riverToLASeg[13].config(123, 6,  &riverToLASeg[12]/*r15*/, 5, RIVER_ASC);
+    riverToLASeg[14].config(129, 8,  &riverToLASeg[15]/*r18*/, 5, RIVER_ASC);
+    riverToLASeg[15].config(137, 10,  &riverToLASeg[16]/*r19*/, 5, RIVER_ASC);
+
+    // section 4 R19 - R21
+    riverToLASeg[16].config(147, 9,  &riverToLASeg[18]/*r21*/, 19, RIVER_ASC);
+    riverToLASeg[17].config(156, 7,  &riverToLASeg[18]/*r21*/, 21, RIVER_ASC);
+    riverToLASeg[18].config(163, 33,  &riverToLASeg[25]/*r28*/, 0, RIVER_ASC);
+
+    // section 5 R22 - R25
+    riverToLASeg[19].config(196, 10,  &riverToLASeg[18]/*r21*/, 12, RIVER_ASC);
+    riverToLASeg[20].config(206, 9,  &riverToLASeg[18]/*r21*/, 16, RIVER_ASC);
+    riverToLASeg[21].config(215, 3,  &riverToLASeg[22]/*r25*/, 6, RIVER_ASC);
+    riverToLASeg[22].config(218, 18,  &riverToLASeg[18]/*r21*/, 26, RIVER_ASC);
+    
+    // section 6 R26 - R30
+    riverToLASeg[23].config(236, 17,  &riverToLASeg[18]/*r21*/, 32, RIVER_ASC);
+    riverToLASeg[24].config(253, 5,  &riverToLASeg[23]/*r26*/, 8, RIVER_ASC);
+    riverToLASeg[25].config(258, 12,  &riverToLASeg[27]/*r31*/, 0, RIVER_ASC);
+    riverToLASeg[26].config(270, 7,  &riverToLASeg[25]/*r28*/, 11, RIVER_ASC);
+    riverToLASeg[27].config(277, 2,  &riverToLASeg[26]/*r29*/, 5, RIVER_ASC);
+
+    // section 7 R31 - R35(old R13)
+    riverToLASeg[28].config(279, 9,  NULL, 0, RIVER_ASC);
+    riverToLASeg[29].config(288, 5,  &riverToLASeg[30]/*r33*/, 2, RIVER_ASC);
+    riverToLASeg[30].config(293, 6,  NULL, 0, RIVER_ASC);
+    //riverToLASeg[31].config(298, 1,  NULL, 0, RIVER_ASC); // just first pixel of R34
 
     // section 7 R35
-    riverToLASeg[11].config(311, 12,  NULL, 0, RIVER_ASC);
+    riverToLASeg[31].config(311, 12,  NULL, 0, RIVER_ASC);
     // section 8 R36
-    riverToLASeg[12].config(323, 24,  NULL, 0, RIVER_ASC); // end
+    riverToLASeg[32].config(323, 24,  NULL, 0, RIVER_ASC); // end
 
     // Water areas
     supplyFromAfarSeg[0].config(2, 24, NULL, 0, WATERAREA);
@@ -217,9 +252,8 @@ void LedMap::triggerGJCity() {
   GJCityMod.triggerFadeIn();
 }
 void LedMap::triggerLA() {
-  riverToGJCityMod.triggerFadeIn();
   LAMod.triggerFadeIn();
-  coloradoMod.triggerFadeIn();
+  riverToLAMod.triggerFadeIn();
 }
 void LedMap::triggerMapKey() {
   mapKeyMod.triggerFadeIn();
@@ -248,6 +282,8 @@ void LedMap::triggerFadeInAll() {
 }
 
 void LedMap::receiveInput(int butt) {
+  if(previousButton == butt)
+    return;
   // debounce the input like in nakaya
   if (butt > 0 && butt <= NUM_MODULES) {
     // fadeOut previous button pressed ledModules
@@ -279,12 +315,11 @@ void LedMap::receiveInput(int butt) {
       case 8:
         LAMod.triggerFadeOut();
         riverToLAMod.triggerFadeOut();
-        coloradoMod.triggerFadeOut();
         break;
       case 9:
         riverToLAMod.triggerFadeOut();
         LAMod.triggerFadeOut();
-        coloradoMod.triggerFadeOut();
+        coloradoExitMod.triggerFadeOut();
         break;
       case -1:
         Serial.println(F("No previous press"));
@@ -322,19 +357,18 @@ void LedMap::receiveInput(int butt) {
       case 8:
         LAMod.triggerFadeIn();
         riverToLAMod.triggerFadeIn();
-        coloradoMod.triggerFadeIn();
         break;
       case 9:
         // attractorMod.triggerFadeIn();
         riverToLAMod.triggerFadeInAttractor();
         LAMod.triggerFadeInAttractor();
-        coloradoMod.triggerFadeInAttractor();
+        coloradoExitMod.triggerFadeInAttractor();
         break;
       case -1:
-        Serial.println("No previous press");
+        Serial.println(F("No previous press"));
         break;
       default:
-        Serial.println("Error out of bounds button number passed to LedMap");
+        Serial.println(F("Error out of bounds button number passed to LedMap"));
         break;
     } // end switch
     // remember the current button as a previous button press

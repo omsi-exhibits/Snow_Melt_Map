@@ -4,7 +4,7 @@
 #include <FastLED.h>
 #include "LedSegment.h"
 
-enum LEDSTATE { IDLE_STATIC, FADEIN, FADEOUT, IDLE_ANIMATE, IDLE_ANIMATE_ATTRACTOR };
+enum LEDSTATE { IDLE_STATIC, FADEIN, FADEOUT, IDLE_ANIMATE, IDLE_ANIMATE_ATTRACTOR, FADEIN_WAIT };
 
 class LedModule {
     public:
@@ -16,14 +16,14 @@ class LedModule {
         void triggerIdleStatic();
         void triggerIdleAnimate(); // animates river
         void triggerFadeInAttractor();
+        void triggerFadeIn2();
         void triggerFadeIn();
         void triggerFadeOut();
         void triggerAttractorAnimate();
 
         void drawSegments(); // un needed?
         void drawFadeSegments();
-        void drawAnimatedSegments();
-        void drawAnimatedSegments2(); // Animate riversegments
+        void drawAnimatedSegments(); // Animate riversegments
         void drawAnimatedAttractor();
 
         void clearAllSegments();
@@ -52,8 +52,10 @@ class LedModule {
         // Fade Related
         unsigned long mFadeInStartTime;
         unsigned long mFadeOutStartTime;
-        static const int mFadeInDuration = 2200;
-        static const int mFadeOutDuration = 1800;
+        static const int mFadeInDuration = 1200;
+        static const int mFadeOutDuration = 800;
+        unsigned long mFadeInWaitTime;
+        
         // Attractor Related
         unsigned long mAttractorFadeTimer;
         static const int mAttractorFadeDuration = 4000;

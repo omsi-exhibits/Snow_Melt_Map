@@ -32,7 +32,7 @@ unsigned long riverTimeStep = 2200;
 /************************* SETUP ***********************/
 void setup() {
   //heartbeat led
-  Serial.begin(9600);
+  //Serial.begin(9600);
   pinMode(13,OUTPUT);
   serialInput.begin();
   ledMap.receiveInput(8);
@@ -43,8 +43,8 @@ void loop() {
   // Get input from SerialReader 
   serialInput.update();
   int buttonIn = serialInput.getAButton();
-  Serial.print("button rec: ");
-  Serial.println(buttonIn);
+  //Serial.print("button rec: ");
+  //Serial.println(buttonIn);
 
 
   // *********** Main State *************

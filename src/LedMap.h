@@ -18,6 +18,7 @@
 // Segment lengths :: abbreviations of the LedSegment Names they are used in
 // for example: SSS = snow site segments, RTLVS = river to las vegas segments
 #define CRS 21
+#define CRES 1
 #define SSS 7
 
 #define DS 4
@@ -28,7 +29,7 @@
 #define GJCS 2
 #define RTGJCS 2
 
-#define RTLAS 13
+#define RTLAS 33
 #define LAS 1
 
 #define SFAS 6
@@ -37,7 +38,7 @@
 
 // used to map button presses to ledModules
 // 8 module sets for buttons and +1 attractor
-#define NUM_MODULES 9
+#define NUM_MODULES 10
 
 
 class LedMap {
@@ -49,6 +50,7 @@ class LedMap {
 
     // LED Segments
     LedSegment coloradoRiverSeg[CRS];
+    LedSegment coloradoRiverExitSeg[CRES];
     LedSegment snowSiteSeg[SSS];
     LedSegment damSeg[DS];
     LedSegment farmSeg[FS];
@@ -66,6 +68,7 @@ class LedMap {
     LedSegment mapKeySeg[MKS];
 
     LedModule coloradoMod;
+    LedModule coloradoExitMod;
     LedModule snowSiteMod;
     LedModule damMod;
     LedModule farmMod;

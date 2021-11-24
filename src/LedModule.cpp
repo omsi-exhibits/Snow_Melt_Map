@@ -1,22 +1,6 @@
 #include "LedModule.h"
 #include "LedSegment.h"
-//#include <Adafruit_NeoPixel_ZeroDMA.h>
-//#include <Arduino.h>
-/*
-  int i = 0;
-  // draw Dams - golden yellow
-    pixels1.setPixelColor(i, pixels0.Color(255,255,0));
-
-  // City - purple
-    pixels1.setPixelColor(i, pixels0.Color(160,0, 255));
-
-  // Snow Sample site
-    pixels1.setPixelColor(i, pixels0.Color(255,255,255));
-  
-  // water receiving - pink
-    pixels1.setPixelColor(i, pixels0.Color(255, 20, 100));
-  */
-// Static member definitions  
+// Static color definitions  
 CRGB LedModule::mDamColor = CRGB(255,255,0);
 CRGB LedModule::mCityColor = CRGB(255,60,0);
 //CRGB LedModule::mCityColor = CRGB(160,0,200); // old color
@@ -29,11 +13,12 @@ CRGB LedModule::mBrightRiverColor = CRGB(40,40,255);
 
 LedModule::LedModule(CRGB* leds, LedSegment* ledSegments, int numLedSegments) {
     config(leds, ledSegments, numLedSegments);
+    // this constructor is not used
 }
 LedModule::LedModule() {
-    // if this constructore is used the config function must me called
+    // when this constructore is used the config function must me called
     // at a later time. before you start using the class
-    // Made to be used in the LedMap class
+    // LedModule is Made to be used in the LedMap class
 }
 void LedModule::config(CRGB* leds, LedSegment* ledSegments, int numLedSegments) {
     mAttractorActive = false;
@@ -129,12 +114,13 @@ void LedModule::fadeRiverSegments() {
 }
 void LedModule::drawFadeSegments() {
     //Draw FadeIn / FadeOutSegments
+    fract8 dTime = 0;
     
     // Serial.println(deltaTime);
     // Calculate all fade Colors For Dams, Cities, WaterAreas, Tractors, riversHalfway?
     if(mToggleState == FADEIN) {
         float deltaTime = ((float)(millis() - mFadeInStartTime)/(float)mFadeInDuration);
-        fract8 dTime = round(deltaTime * 255);
+        dTime = round(deltaTime * 255);
         mFadeDamColor = blend(CRGB::Black, mDamColor, dTime);
 
         mFadeDamColor = blend(CRGB::Black, mDamColor, dTime);
@@ -146,7 +132,7 @@ void LedModule::drawFadeSegments() {
 
     } else if (mToggleState == FADEOUT) {
         float deltaTime = ((float)(millis() - mFadeOutStartTime)/(float)mFadeOutDuration);
-        fract8 dTime = round(deltaTime * 255);
+        dTime = round(deltaTime * 255);
 
         mFadeDamColor = blend(mDamColor, CRGB::Black, dTime);
         mFadeCityColor = blend(mCityColor, CRGB::Black, dTime);
@@ -164,11 +150,13 @@ void LedModule::drawFadeSegments() {
         SEGMENT_TYPE type = pLedSegments[j].mType;
         if(type == DAM) {
             for(int i = si; i < si + nl; i++) {
-                pLeds[i] = mFadeDamColor;
+                // pLeds[i] = mFadeDamColor;
+                pLeds[i] = blend(pLeds[i], mFadeDamColor, dTime);
             }
         } else if(type == CITY) { 
             for(int i = si; i < si + nl; i++) {
-                pLeds[i] = mFadeCityColor;
+                //pLeds[i] = mFadeCityColor;
+                pLeds[i] = blend(pLeds[i], mFadeCityColor, dTime);
             }
             
         } else if(type == SNOWSITE) { 
@@ -188,7 +176,8 @@ void LedModule::drawFadeSegments() {
             
         } else if(type == RIVER_ASC || type == RIVER_DES) { 
             for(int i = si; i < si + nl; i++) {
-                pLeds[i] = mFadeHalfRiverColor;
+                //pLeds[i] = mFadeHalfRiverColor;
+                pLeds[i] = blend(pLeds[i], mFadeHalfRiverColor,dTime);
             }
             
         }
@@ -197,37 +186,6 @@ void LedModule::drawFadeSegments() {
     } // end for loop segments
     
 }
-void LedModule::drawAnimatedSegments() {
-
-    for(int j = 0; j < mNumLedSegments; j ++) {
-        int si = pLedSegments[j].mStartIndex;
-        int nl = pLedSegments[j].mLength;
-
-        SEGMENT_TYPE dir = pLedSegments[j].mType;
-        if(dir == RIVER_ASC) {
-            // Marque the strip leds. Ascending order
-            for(int i = si; i < si + nl; i++) {
-                if(i%3 == mAnimationStep)  {
-                    pLeds[i] = CRGB::Blue;
-                }
-            }
-        } else if(dir == RIVER_DES) { 
-            // Marque in Descending order
-            int aStep = mAnimationStep;
-            if(aStep == 2)
-                aStep = 0;
-            else if(aStep == 0)
-                aStep = 2;
-            for(int i = si + nl - 1; i >= si; i--) {
-                if(i%3 == aStep) 
-                    pLeds[i] = CRGB::Blue;
-            }
-        }
-
-        
-    } // end for loop segments
-}
-
 void LedModule::drawAnimatedAttractor() {
     // if river types
     // if fade direction
@@ -239,10 +197,10 @@ void LedModule::drawAnimatedAttractor() {
     if(mAttractorFadeDir == FADEIN) {
         float deltaTime = ((float)(millis() - mFadeInStartTime)/(float)mFadeInDuration);
         fract8 dTime = round(deltaTime * 255);
-        Serial.println(F("Fading in Attractor"));
+        //Serial.println(F("Fading in Attractor"));
         riverAttractorColor = blend(bottomColor, mHalfRiverColor, dTime);
     } else if (mAttractorFadeDir == FADEOUT) {
-        Serial.println(F("Fading out Attractor"));
+        //Serial.println(F("Fading out Attractor"));
         float deltaTime = ((float)(millis() - mFadeOutStartTime)/(float)mFadeOutDuration);
         fract8 dTime = round(deltaTime * 255);
         riverAttractorColor = blend(mHalfRiverColor, bottomColor, dTime);
@@ -263,7 +221,7 @@ void LedModule::drawAnimatedAttractor() {
     // sparkle 
 }
 
-void LedModule::drawAnimatedSegments2() {
+void LedModule::drawAnimatedSegments() {
     // reset river segment animIndexs
 
     for(int j = 0; j < mNumLedSegments; j ++) {
@@ -293,9 +251,15 @@ void LedModule::drawAnimatedSegments2() {
     } // end for loop segments
 }
 
+
 void LedModule::update() {
     
     switch(mToggleState) {
+        case FADEIN_WAIT :
+            if(millis() - mFadeInWaitTime > mFadeOutDuration) {
+                triggerFadeIn2();
+            }
+            break;
         case FADEIN :
             if(millis() - mFadeInStartTime < mFadeInDuration) {
                 drawFadeSegments();
@@ -316,7 +280,7 @@ void LedModule::update() {
                 fadeRiverSegments();
                 //clearRiverSegments();
                 /////////////fillRiverSegments(mHalfRiverColor);
-                drawAnimatedSegments2();
+                drawAnimatedSegments();
             }
             break;
         case FADEOUT :
@@ -338,13 +302,13 @@ void LedModule::update() {
                 if((millis() - mFadeOutStartTime) >mFadeOutDuration) {
                     mAttractorFadeDir = FADEIN;
                     mFadeInStartTime = millis();
-                    Serial.println("Switching to FADEIN attractor");
+                    Serial.println(F("Switching to FADEIN attractor"));
                 } 
             } else if(mAttractorFadeDir == FADEIN) {
                 if((millis() - mFadeInStartTime) >mFadeInDuration) {
                     mAttractorFadeDir = FADEOUT;
                     mFadeOutStartTime = millis();
-                    Serial.println("Switching to FADEOUT attractor");
+                    Serial.println(F("Switching to FADEOUT attractor"));
                 } 
             }
             drawAnimatedAttractor();
@@ -353,7 +317,7 @@ void LedModule::update() {
         case IDLE_STATIC :
             break;
         default :
-            Serial.println(F("Undefined state of mToggleable in ledModule!"));
+            Serial.println(F("Undefined state of mToggleState in ledModule!"));
             break;
     }
     
@@ -375,17 +339,22 @@ void LedModule::triggerFadeOut() {
     //mCurrentFadeOutDuration = mFadeOutDuration;
     mToggleState = FADEOUT;
 }
-void LedModule::triggerFadeIn() {
-    mAttractorActive = false;
+void LedModule::triggerFadeIn2() {
     Serial.println(F("FadeIn triggered"));
     mFadeInStartTime = millis();
     mToggleState = FADEIN;
 }
+void LedModule::triggerFadeIn() {
+    mAttractorActive = false;
+    Serial.println(F("FadeInWait triggered"));
+    mFadeInWaitTime = millis();
+    mToggleState = FADEIN_WAIT;
+}
 void LedModule::triggerFadeInAttractor() {
     mAttractorActive = true;
-    Serial.println(F("FadeIn triggered"));
-    mFadeInStartTime = millis();
-    mToggleState = FADEIN;
+    Serial.println(F("FadeInAttractor triggered"));
+    mFadeInWaitTime = millis();
+    mToggleState = FADEIN_WAIT;
 }
 
 void LedModule::triggerAttractorAnimate() {

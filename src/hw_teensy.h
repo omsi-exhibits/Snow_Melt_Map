@@ -23,7 +23,8 @@ Note that any pin above 21 is a pad on the back of the board. This is the orderi
 // OctoWS2811 adapter LED pins. LED STRIP # 1- 8
 // 2, 14, 7, 8, 6, 20, 21
 
-// Teensy Multi out attempt
+// Teensy Multi out requires strips to be same size
+// so the last 150 pixels just get ignored.
 #define NUM_PIXELS_PER_STRIP 450
 #define NUM_STRIPS 2
 
@@ -35,7 +36,5 @@ Note that any pin above 21 is a pad on the back of the board. This is the orderi
 #define NUM_BUTTONS 7
 // unused pins broken out on the OctoWS2811 adapter
 // 0, 1, 23, 22, 19, 18, 17
-const int buttonPins[NUM_BUTTONS] = {0,1,23,22,19,18,17};
-//const int buttonLightPins[NUM_BUTTONS] = {3, 4, 5, 9, 10, 11, 12, 15};
 
 #endif
