@@ -15,15 +15,19 @@
 // Arduino Keyboard.h
 
 /*
-   This progran listens to button inputs and then outputs a on Serial1 . 1-8 buttons press a byte with the value of 1-8
+   This program listens to button inputs and then outputs on Serial1 . 1-8 buttons press a byte with the value of 1-8
    In attractor mode the buttons pulse in unison. Once a button is pressed it will Disable input and dim the led lights for
-   the duration of that video. Each button has a video length asociated with it to disable the button led and presses.
+   the duration a configurable duration. Here set to 100ms. Audio feedback will play on a button press as well.
 */
 
 #define DEBUG 1
 
 #include <Bounce2.h>
 //#include <Keyboard.h>
+#include "wavTrigger.h"
+#include "AudioOut.h"
+
+AudioOut audioOut = AudioOut();
 
 #define BUTTON_1 A5
 #define BUTTON_2 A4
@@ -141,7 +145,7 @@ void setup ()
 
 // Serial Out setup to the led controller board.
 Serial1.begin(9600);
-
+audioOut.begin();
 }  // end of setup
 
 void pulseButtonLeds() {
@@ -201,6 +205,8 @@ void doButtons() {
     //Keyboard.write('1');
     analogWrite(BUTTON_1_LED, pressedBrightness);
     Serial1.write(1);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button2.fell()) {
@@ -213,6 +219,8 @@ void doButtons() {
     //Keyboard.write('2');
     analogWrite(BUTTON_2_LED, pressedBrightness);
     Serial1.write(2);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button3.fell()) {
@@ -225,6 +233,8 @@ void doButtons() {
     //Keyboard.write('3');
     analogWrite(BUTTON_3_LED, pressedBrightness);
     Serial1.write(3);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button4.fell()) {
@@ -237,6 +247,8 @@ void doButtons() {
     //Keyboard.write('4');
     analogWrite(BUTTON_4_LED, pressedBrightness);
     Serial1.write(4);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button5.fell()) {
@@ -249,6 +261,8 @@ void doButtons() {
     //Keyboard.write('5');
     analogWrite(BUTTON_5_LED, pressedBrightness);
     Serial1.write(5);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button6.fell()) {
@@ -261,6 +275,8 @@ void doButtons() {
     //Keyboard.write('6');
     analogWrite(BUTTON_6_LED, pressedBrightness);
     Serial1.write(6);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button7.fell()) {
@@ -273,6 +289,8 @@ void doButtons() {
     //Keyboard.write('7');
     analogWrite(BUTTON_7_LED, pressedBrightness);
     Serial1.write(7);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 
   if (button8.fell()) {
@@ -285,10 +303,13 @@ void doButtons() {
     //Keyboard.write('8');
     analogWrite(BUTTON_8_LED, pressedBrightness);
     Serial1.write(8);
+    audioOut.randomizePitch();
+    audioOut.playTrack(1);
   }
 }
 
 void loop() {
+  audioOut.update();
 
   // pulse button leds
   // ramp up ledstrip brightness

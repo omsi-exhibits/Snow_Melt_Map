@@ -30,6 +30,8 @@ LedMap::LedMap() : attractorMod(leds0, leds1, NUM_PIXELS_PER_STRIP, NUM_PIXELS_P
     supplyFromAfarMod.config(leds1, supplyFromAfarSeg, SFAS);
     mapKeyMod.config(leds1, mapKeySeg, MKS);
 
+    allCitiesMod.config(leds1, allCitiesSeg, ACS);
+
 
     FastLED.addLeds<NUM_STRIPS, WS2812, LEDPIN_PARALLEL, GRB>(ledsAll, NUM_PIXELS_PER_STRIP);
     //FastLED.addLeds<NUM_STRIPS, WS2813, LED_PIN, RGB>(leds, NUM_LEDS);
@@ -56,6 +58,7 @@ void LedMap::update() {
     supplyFromAfarMod.update();
     attractorMod.update();
     mapKeyMod.update();
+    allCitiesMod.update();
 }
 
 void LedMap::configureLedSegments() {
@@ -219,6 +222,9 @@ void LedMap::configureLedSegments() {
     mapKeySeg[5].config(72, 1, NULL, 0, RIVER_ASC); // river
     mapKeySeg[6].config(73, 1, NULL, 0, RIVER_ASC); // Aqueduct
 
+    allCitiesSeg[0].config(0, 2, NULL, 0, CITY); // LA
+    allCitiesSeg[1].config(49, 2, NULL, 0, CITY);  // vegas
+    allCitiesSeg[2].config(161, 2, NULL, 0, CITY); // GJcity
 }
 
 
@@ -318,7 +324,7 @@ void LedMap::receiveInput(int butt) {
         break;
       case 9:
         riverToLAMod.triggerFadeOut();
-        LAMod.triggerFadeOut();
+        allCitiesMod.triggerFadeOut();
         coloradoExitMod.triggerFadeOut();
         break;
       case -1:
@@ -361,7 +367,7 @@ void LedMap::receiveInput(int butt) {
       case 9:
         // attractorMod.triggerFadeIn();
         riverToLAMod.triggerFadeInAttractor();
-        LAMod.triggerFadeInAttractor();
+        allCitiesMod.triggerFadeInAttractor();
         coloradoExitMod.triggerFadeInAttractor();
         break;
       case -1:

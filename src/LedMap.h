@@ -35,6 +35,7 @@
 #define SFAS 6
 
 #define MKS 7
+#define ACS 6
 
 // used to map button presses to ledModules
 // 8 module sets for buttons and +1 attractor
@@ -66,6 +67,7 @@ class LedMap {
 
     LedSegment supplyFromAfarSeg[SFAS];
     LedSegment mapKeySeg[MKS];
+    LedSegment allCitiesSeg[ACS];
 
     LedModule coloradoMod;
     LedModule coloradoExitMod;
@@ -81,6 +83,7 @@ class LedMap {
 
     LedModule riverToLAMod;
     LedModule LAMod; //includes the dams
+    LedModule allCitiesMod;
     
     LedModule supplyFromAfarMod;
     LedModule mapKeyMod;
