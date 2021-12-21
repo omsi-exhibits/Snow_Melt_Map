@@ -19,9 +19,9 @@
 // for example: SSS = snow site segments, RTLVS = river to las vegas segments
 #define CRS 21
 #define CRES 1
-#define SSS 7
+#define SSS 8
 
-#define DS 4
+#define DS 5
 #define LVS 2
 #define RTLVS 17
 

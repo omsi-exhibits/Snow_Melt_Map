@@ -98,22 +98,24 @@ void LedMap::configureLedSegments() {
     coloradoRiverExitSeg[0].config(298, 13,  NULL, 0, RIVER_ASC);
 
     // snow sites
-    snowSiteSeg[0].config(51, 13, NULL, 0, SNOWSITE); 
-    snowSiteSeg[1].config(94, 7, NULL, 0, SNOWSITE); 
-    snowSiteSeg[2].config(102, 1, NULL, 0, SNOWSITE); 
-    snowSiteSeg[3].config(147, 14, NULL, 0, SNOWSITE); 
-    snowSiteSeg[4].config(165, 4, NULL, 0, SNOWSITE); 
-    snowSiteSeg[5].config(170, 8, NULL, 0, SNOWSITE); 
-    snowSiteSeg[6].config(183, 7, NULL, 0, SNOWSITE);
+    snowSiteSeg[0].config(51, 5, NULL, 0, SNOWSITE); 
+    snowSiteSeg[1].config(57, 7, NULL, 0, SNOWSITE); 
+    snowSiteSeg[2].config(94, 7, NULL, 0, SNOWSITE); 
+    snowSiteSeg[3].config(102, 1, NULL, 0, SNOWSITE); 
+    snowSiteSeg[4].config(147, 14, NULL, 0, SNOWSITE); 
+    snowSiteSeg[5].config(165, 4, NULL, 0, SNOWSITE); 
+    snowSiteSeg[6].config(170, 8, NULL, 0, SNOWSITE); 
+    snowSiteSeg[7].config(183, 7, NULL, 0, SNOWSITE);
 
     // Farm Segments
     farmSeg[0].config(42, 4,  NULL, 0, TRACTOR);
     farmSeg[1].config(163, 2,  NULL, 0, TRACTOR);
 
     damSeg[0].config(46, 3, NULL, 0, DAM); 
-    damSeg[1].config(101, 1, NULL, 0, DAM); 
-    damSeg[2].config(169, 1, NULL, 0, DAM); 
-    damSeg[3].config(190, 1, NULL, 0, DAM); 
+    damSeg[1].config(56, 1, NULL, 0, DAM); 
+    damSeg[2].config(101, 1, NULL, 0, DAM); 
+    damSeg[3].config(169, 1, NULL, 0, DAM); 
+    damSeg[4].config(190, 1, NULL, 0, DAM); 
 
     lasVegasSeg[0].config(48, 1, NULL, 0, DAM);  // hoover dam
     lasVegasSeg[1].config(49, 2, NULL, 0, CITY);  // vegas
