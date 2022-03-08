@@ -217,10 +217,10 @@ void LedMap::configureLedSegments() {
 
     // Map Key icons
     mapKeySeg[0].config(64, 2, NULL, 0, WATERAREA);
-    mapKeySeg[1].config(66, 1, NULL, 0, SNOWSITE);
+    mapKeySeg[1].config(66, 1, NULL, 0, DAM);
     mapKeySeg[2].config(67, 2, NULL, 0, TRACTOR);
     mapKeySeg[3].config(69, 2, NULL, 0, CITY);
-    mapKeySeg[4].config(71, 1, NULL, 0, DAM);
+    mapKeySeg[4].config(71, 1, NULL, 0, SNOWSITE);
     mapKeySeg[5].config(72, 1, NULL, 0, RIVER_ASC); // river
     mapKeySeg[6].config(73, 1, NULL, 0, RIVER_ASC); // Aqueduct
 

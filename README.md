@@ -28,8 +28,12 @@ So that is 11 + 1 the end of the strip. 50 Leds at 48mA is 2.4A.
 Power supply is a LRS-200-5 5v 200W output
 (Wire Ampacity) [https://en.wikipedia.org/wiki/American_wire_gauge#Tables_of_AWG_wire_sizes]
 
-### Adding fuse
+### Fused Power distro board
+(falcon f-8 power distro board) [https://www.pixelcontroller.com/store/accessories/46-f8-distro.html]
+There are two power distribution boards with 8 5A fuse holders. The fuse holders take mini blade ATX fuses.
 
+Useful fuse links
+(all about fuses for led projects) [https://www.doityourselfchristmas.com/wiki/index.php?title=Power_Supplies#Using_Fuses_and_Fuseholders]
 (assorted fuses) [https://www.amazon.com/Bussmann-NO-43-Blade-Tester-Puller/dp/B000DCN9BW]
 (fuse holder board mount) [https://www.keyelco.com/product.cfm/Mini-Auto-Fuse-Holders/3544-2/product_id/1376]
 (fuse holder mini ATM) [https://www.digikey.com/en/products/detail/keystone-electronics/3568/2137306]
